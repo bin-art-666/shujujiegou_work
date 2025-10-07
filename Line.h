@@ -1,0 +1,24 @@
+#pragma once
+#include<iostream>
+#include<string>
+#include"Station.h"
+
+using namespace std;
+
+//定义地铁线路类
+class Line
+{
+public:
+	string line_name;				//线路名称
+	int station_count;				//线路的站点数
+	Station* stations = nullptr;	//根据站点数动态分配存储空间
+	string brief_name;				//简洁名字
+
+public:
+	Line() : line_name(""),brief_name(""), station_count(0), stations(nullptr) {} // 添加默认构造函数
+	Line(string name, int count,string bname) :line_name(name), station_count(count),brief_name(bname) {
+		stations = new Station[count];
+	};
+	void __Print_all__();
+
+};
