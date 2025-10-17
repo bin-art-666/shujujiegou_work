@@ -272,16 +272,18 @@ void S_three_init(Line& S_three, int S_three_station_count)
 	S_three.stations[7].setStation("平良大街", "S3号线", 110307, false, "S3");
 	S_three.stations[8].setStation("吴侯街", "S3号线", 110308, false, "S3");
 	S_three.stations[9].setStation("高庙路", "S3号线", 110309, false, "S3");
+	S_three.stations[9].setStation("高庙路", "S3号线", 110309, false, "S3");
 
 	S_three.stations[10].setStation("天保", "S3号线", 110310, false, "S3");
 	S_three.stations[11].setStation("刘村", "S3号线", 110311, false, "S3");
 	S_three.stations[12].setStation("马骡圩", "S3号线", 110312, false, "S3");
 	S_three.stations[13].setStation("兰花塘", "S3号线", 110313, false, "S3");
-	S_three.stations[14].setStation("双垅石碛河", "S3号线", 110314, false, "S3");
+	S_three.stations[14].setStation("双垅", "S3号线", 110314, false, "S3");
+	S_three.stations[15].setStation("石碛河", "S3号线", 110315, false, "S3");
 
-	S_three.stations[15].setStation("桥林新城", "S3号线", 110315, false, "S3");
-	S_three.stations[16].setStation("林山", "S3号线", 110316, false, "S3");
-	S_three.stations[17].setStation("高家冲", "S3号线", 110318, false, "S3");
+	S_three.stations[16].setStation("桥林新城", "S3号线", 110316, false, "S3");
+	S_three.stations[17].setStation("林山", "S3号线", 110317, false, "S3");
+	S_three.stations[18].setStation("高家冲", "S3号线", 110318, false, "S3");
 }
 
 void S_six_init(Line& S_six, int S_six_station_count)

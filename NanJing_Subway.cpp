@@ -5,7 +5,7 @@ system_m::system_m(string sysname, Line* lines, int linecount)
 	system_name = sysname;
 	sys_lines = lines;
 	line_count = linecount;
-	station_count = 254;
+	station_count = 255;
 
 	//初始化索引
 	station_index = new Station[station_count];
@@ -267,33 +267,36 @@ void system_m::__search__()
 	cout << "最少站点数线路：" << endl;
 	__search_short__(start_name,end_name);
 	cout << endl;
+
 	cout << "最少换乘站线路：" << endl;
 	__search_less__(start_name, end_name);		//最少换乘站
 }
 
 //最少站点数线路
-void system_m::__search_short__(string start_name, string end_name)
+Array system_m::__search_short__(string start_name, string end_name)
 {
 	int start_index = station_to_index(start_name);
 	int end_index = station_to_index(end_name);
 
 	if (start_index == -1 || end_index == -1||(start_index == end_index)) {
-		return;
+		Array p;
+		p.push_back(-1);
+		return p;
 	}
 
 	//记录前驱结点，用于重建路径
-	int prev[254];
+	int prev[255];
 	//记录是否被访问
-	bool visited[254];
+	bool visited[255];
 
 	//初始化
-	for (int i = 0; i < 254; i++) {
+	for (int i = 0; i < 255; i++) {
 		prev[i] = -1;
 		visited[i] = false;
 	}
 
 
-	queue<int>q;
+	Queue q;
 
 	//初始化起点
 	q.push(start_index);
@@ -325,7 +328,7 @@ void system_m::__search_short__(string start_name, string end_name)
 	}
 
 	//重建路径
-	vector<int> path;
+	Array path;
 	if (prev[end_index] != -1) {
 		int node = end_index;
 		while (node != start_index) {
@@ -333,32 +336,42 @@ void system_m::__search_short__(string start_name, string end_name)
 			node = prev[node];
 		}
 		path.push_back(start_index);
-		reverse(path.begin(), path.end());
+		path.transfer();
 	}
+
+	
 
 	//不改变超节点结构，在外部输出上优化修改
 	for (int i = 0; i < path.size(); i++) {
-		if (i == 0 && station_index[path[0]].station_name == station_index[path[1]].station_name) {
+		if (i == 0 && station_index[path.array[0]].station_name == station_index[path.array[1]].station_name) {
 			continue;
 		}
-		cout << "-> "<<station_index[path[i]].brief_line << " " << station_index[path[i]].station_name << endl;
+		cout << "-> "<<station_index[path.array[i]].brief_line << " " << station_index[path.array[i]].station_name << endl;
+		//station_index[path.array[i]].draw_station();
+		
 	}
+
+
+	return path;
+	
 }
 
 //最少换乘站线路
-void system_m::__search_less__(string start_name, string end_name)
+Array system_m::__search_less__(string start_name, string end_name)
 {
 	int start_index = station_to_index(start_name);
 	int end_index = station_to_index(end_name);
 
 	if (start_index == -1 || end_index == -1 || (start_index == end_index)) {
-		return;
+		Array p;
+		p.push_back(-1);
+		return p;
 	}
 
-	vector<int> start_indices;
-	vector<int> end_indices;
+	Array start_indices;
+	Array end_indices;
 
-	for (int i = 0; i < 254; i++) {
+	for (int i = 0; i < 255; i++) {
 		if (station_index[i].station_name == station_index[start_index].station_name) {
 			start_indices.push_back(i);
 		}
@@ -368,16 +381,19 @@ void system_m::__search_less__(string start_name, string end_name)
 	}
 
 	if (start_indices.empty() || end_indices.empty()) {
-		return;
+		Array p;
+		p.push_back(-1);
+		return p;
 	}
 
-	vector<int> best_path;
+	Array best_path;
 	int min_weight = 100000000;
 
+
 	//对每个起点——终点组合运行迪杰斯特拉
-	for (int start_idx : start_indices) {
-		for (int end_idx : end_indices) {
-			auto result = __dijketra_less__(start_idx, end_idx);
+	for (int ii = 0;ii< start_indices.length();ii++) {
+		for (int jj = 0;jj< end_indices.length();jj++) {
+			pair<Array,int> result = __dijketra_less__(start_indices.array[ii], end_indices.array[jj]);
 			const auto& path = result.first;
 			int weight = result.second;
 			
@@ -392,22 +408,25 @@ void system_m::__search_less__(string start_name, string end_name)
 	//输出结果
 	if (!best_path.empty()) {
 		for (int i = 0; i < best_path.size(); i++) {
-			int idx = best_path[i];
+			int idx = best_path.array[i];
 			cout <<"->" << station_index[idx].brief_line << " " << station_index[idx].station_name << endl;
+			station_index[idx].draw_station();
 		}
 	}
+
+	return best_path;
 }
 
 
 //单独的dijkstra算法
-pair<vector<int>, int> system_m:: __dijketra_less__(int start_index, int end_index)
+pair<Array, int> system_m:: __dijketra_less__(int start_index, int end_index)
 {
-	int prev[254];
-	bool visited[254];
-	int dist[254];
+	int prev[255];
+	bool visited[255];
+	int dist[255];
 
 	//初始化
-	for (int i = 0; i < 254; i++) {
+	for (int i = 0; i < 255; i++) {
 		prev[i] = -1;
 		visited[i] = false;
 		dist[i] = 100000000;
@@ -417,11 +436,11 @@ pair<vector<int>, int> system_m:: __dijketra_less__(int start_index, int end_ind
 	prev[start_index] = start_index;
 
 	//Dijsktra主循环
-	for (int count = 0; count < 254; count++) {
+	for (int count = 0; count < 255; count++) {
 		//找到未访问的最小结点
 		int u = -1;
 		int min_dist = 100000000;
-		for (int i = 0; i < 254; i++) {
+		for (int i = 0; i < 255; i++) {
 			if (!visited[i] && dist[i] < min_dist) {
 				min_dist = dist[i];
 				u = i;
@@ -435,7 +454,7 @@ pair<vector<int>, int> system_m:: __dijketra_less__(int start_index, int end_ind
 		visited[u] = true;
 
 		//更新
-		for (int v = 0; v < 254; v++) {
+		for (int v = 0; v < 255; v++) {
 			if (!visited[v] && Graph_less[u][v]!= 100000000) {
 				int new_dist = dist[u] + Graph_less[u][v];
 				if (new_dist < dist[v]) {
@@ -447,7 +466,8 @@ pair<vector<int>, int> system_m:: __dijketra_less__(int start_index, int end_ind
 	}
 
 	//重建路径
-	vector<int> path;
+	Array path;
+
 	if (prev[end_index] != -1 && dist[end_index] != 100000000) {
 		int node = end_index;
 		while (node != start_index) {
@@ -455,9 +475,24 @@ pair<vector<int>, int> system_m:: __dijketra_less__(int start_index, int end_ind
 			node = prev[node];
 		}
 		path.push_back(start_index);
-		reverse(path.begin(), path.end());
+		path.transfer();
 	}
 
 	
 	return { path,dist[end_index] };
+}
+
+
+node system_m::find_i_j(Station station)
+{
+	node ij;
+	for (int i = 0; i < 13; i++) {
+		for (int j = 0; j < sys_lines[i].station_count; j++) {
+			if (sys_lines[i].stations[j].station_name == station.station_name) {
+				ij.i = i;
+				ij.j = j;
+				return ij;
+			}
+		}
+	}
 }

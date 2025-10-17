@@ -74,7 +74,19 @@
     <ClCompile Include="Line_init.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="self_vector.cpp">
+    <ClCompile Include="Array.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Queue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="drawEnter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Line_draw_init.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lineButton.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -91,7 +103,19 @@
     <ClInclude Include="Line_init.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="self_vector.h">
+    <ClInclude Include="Array.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Queue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="drawEnter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Line_draw_init.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="lineButton.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

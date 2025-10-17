@@ -43,7 +43,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -139,18 +139,26 @@
     <Text Include="换乘站.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Array.cpp" />
+    <ClCompile Include="drawEnter.cpp" />
     <ClCompile Include="Line.cpp" />
+    <ClCompile Include="lineButton.cpp" />
+    <ClCompile Include="Line_draw_init.cpp" />
     <ClCompile Include="Line_init.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NanJing_Subway.cpp" />
-    <ClCompile Include="self_vector.cpp" />
+    <ClCompile Include="Queue.cpp" />
     <ClCompile Include="Station.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Array.h" />
+    <ClInclude Include="drawEnter.h" />
     <ClInclude Include="Line.h" />
+    <ClInclude Include="lineButton.h" />
+    <ClInclude Include="Line_draw_init.h" />
     <ClInclude Include="NanJing_Subway.h" />
     <ClInclude Include="Line_init.h" />
-    <ClInclude Include="self_vector.h" />
+    <ClInclude Include="Queue.h" />
     <ClInclude Include="Station.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

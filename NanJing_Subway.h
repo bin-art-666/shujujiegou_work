@@ -3,8 +3,9 @@
 #include<string>
 #include"Station.h"
 #include"Line.h"
-#include<queue>
+#include"Queue.h"
 #include<algorithm>
+#include"Array.h"
 
 using namespace std;
 
@@ -14,13 +15,19 @@ struct tansfer
 	int id_2;
 };
 
+struct node
+{
+	int i;
+	int j;
+};
+
 class system_m
 {
 public:
 	string system_name;
 	Line* sys_lines;
 	int line_count;
-	int station_count = 254;
+	int station_count = 255;
 	Station *station_index;
 
 	tansfer T[68];
@@ -39,9 +46,11 @@ public:
 
 	//查找算法
 	//最少站点数
-	void __search_short__(string start_name,string end_name);
+	Array __search_short__(string start_name,string end_name);
 	//最少换乘站
-	void __search_less__(string start_name,string end_name);
+	Array __search_less__(string start_name,string end_name);
 	
-	pair<vector<int>, int> __dijketra_less__(int start_index, int end_i);
+	pair<Array, int> __dijketra_less__(int start_index, int end_i);
+
+	node find_i_j(Station station);
 };
